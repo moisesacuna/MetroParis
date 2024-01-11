@@ -13,7 +13,7 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class DBConnect {
 
-	private static final String jdbcURL = "jdbc:mysql://localhost/metroparis?serverTimezone=UTC";
+	private static final String jdbcURL = "jdbc:postgresql://192.168.64.18:5433/polito";	
 	private static HikariDataSource ds;
 
 	public static Connection getConnection() {
@@ -21,15 +21,27 @@ public class DBConnect {
 		if (ds == null) {
 			
 			ds = new HikariDataSource();
-
 			ds.setJdbcUrl(jdbcURL);
-			ds.setUsername("root");
-			ds.setPassword("root");
-
-			// configurazione MySQL
+			ds.setUsername("webpolito");
+			ds.setPassword("ravenna");
+			// configurazione POSTGRESQL
+			ds.addDataSourceProperty("validationQuery", "SELECT 1");
 			ds.addDataSourceProperty("cachePrepStmts", "true");
 			ds.addDataSourceProperty("prepStmtCacheSize", "250");
 			ds.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+			ds.addDataSourceProperty("initialSize", "0");
+			ds.addDataSourceProperty("maxActive", "80");
+			ds.addDataSourceProperty("maxIdle", "30");
+			ds.addDataSourceProperty("minIdle", "10");
+			ds.addDataSourceProperty("timeBetweenEvictionRunsMillis", "30000");  
+			ds.addDataSourceProperty("minEvictableIdleTimeMillis", "60000");  
+			ds.addDataSourceProperty("testOnBorrow", "30000");  
+			ds.addDataSourceProperty("timeBetweenEvictionRunsMillis", "30000");  
+			ds.addDataSourceProperty("validationInterval", "30000");
+			ds.addDataSourceProperty("removeAbandoned", "true");   
+			ds.addDataSourceProperty("removeAbandonedTimeout", "120"); 
+			ds.addDataSourceProperty("logAbandoned", "true");
+			ds.addDataSourceProperty("abandonWhenPercentageFull", "60");
 
 		}
 
